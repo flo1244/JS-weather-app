@@ -6,7 +6,9 @@ const api = {
 const search = document.querySelector(".search");
 const btn = document.querySelector(".btn");
 const section = document.querySelector("section");
+const error = document.querySelector(".error");
 const container = document.querySelector(".bottom");
+
 
 const getData = async function () {
   const request = await fetch(
@@ -20,20 +22,21 @@ const getData = async function () {
 };
 
 btn.addEventListener("click", function (e) {
-  e.preventDefault();
+  e.preventDefault();//prevenst page from reloading
   if (e.type === "click") {
     getData(search.value);
     console.log(search.value);
     //getData();
 	container.classList.remove("container-fade-in");
+	 
   }
 });
 
 const displayData = function (data) {
   if (data.cod === "404") {
-    const error = document.querySelector(".error");
+    //const error = document.querySelector(".error");
     error.textContent = "Please enter a valid city!";
-    search.value = "";
+	
   } else {
     const city = document.querySelector(".city");
     city.innerText = `${data.name}, ${data.sys.country}`;
@@ -57,8 +60,9 @@ const displayData = function (data) {
     const iconURL = "http://openweathermap.org/img/wn/";
     weatherIcon.src = iconURL + data.weather[0].icon + "@2x.png";
 
-    search.value = "";
-	
+	search.value = "";
+	error.textContent ="";
+	  
 	container.classList.add("container-fade-in");
 	section.classList.remove("hide");
   }
