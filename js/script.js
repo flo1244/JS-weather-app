@@ -1,6 +1,6 @@
 const api = {
   key: "f6273c080b02e6439d700a66353fe6ed",
-  base: "https://api.openweathermap.org/data/2.5/"
+  base: "https://api.openweathermap.org/data/2.5/" //key intentionally in the code for demonstration purposes
 };
 
 const search = document.querySelector(".search");
@@ -9,8 +9,8 @@ const section = document.querySelector("section");
 const error = document.querySelector(".error");
 const container = document.querySelector(".bottom");
 
-
-const getData = async function () {
+//grabs data from api
+const getData = async function () { 
   const request = await fetch(
     `${api.base}weather?q=${search.value}&appid=${api.key}&units=imperial`
   );
@@ -18,9 +18,10 @@ const getData = async function () {
   const data = await request.json();
 
   console.log(data);
-  displayData(data);
+  displayData(data); 
 };
 
+/*Makes are button interactive. Type in the field and click submit grabs data from API based on city name. */
 btn.addEventListener("click", function (e) {
   e.preventDefault();//prevenst page from reloading
   if (e.type === "click") {
@@ -32,6 +33,7 @@ btn.addEventListener("click", function (e) {
   }
 });
 
+//Displays data on webpage.
 const displayData = function (data) {
   if (data.cod === "404") {
     //const error = document.querySelector(".error");
@@ -60,14 +62,15 @@ const displayData = function (data) {
     const iconURL = "http://openweathermap.org/img/wn/";
     weatherIcon.src = iconURL + data.weather[0].icon + "@2x.png";
 
-	search.value = "";
-	error.textContent ="";
+	search.value = "";//Clears search value .
+	error.textContent =""; // Clears error code.
 	  
 	container.classList.add("container-fade-in");
 	section.classList.remove("hide");
   }
 };
 
+//Creates the current date to display.
 const dateFunction = function (d) {
   let months = [
     "Jan",
